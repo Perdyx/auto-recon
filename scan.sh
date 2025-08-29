@@ -22,9 +22,9 @@
 
 ##################### CONFIGURATION #####################
 
-DEBUG=true # Set to true to enable debug mode (removes previous scans with same scope_id which is useful for testing)
-DNSBF=false # Set to true to enable DNS brute-forcing with ShuffleDNS (may take a while and not fully tested)
-VRSLV=true # Set to true to generate a new DNS resolvers list before scanning (may take a long time)
+DEBUG=false # Set to true to enable debug mode (removes previous scans with same scope_id which is useful for testing)
+DNSBF=false # Set to true to enable DNS brute-forcing with ShuffleDNS (takes forever and not fully tested)
+VRSLV=true # Set to true to generate a new DNS resolvers list before scanning (can take a long time)
 LRSLV=false # Set to true to use a larger list of DNS resolvers from Trickest (may be slower, but could yield better results)
 
 
@@ -126,7 +126,6 @@ fi
 
 # Initialize a new scan directory
 mkdir -p "$scan_path"
-mkdir -p "$scan_path/fingerprints"
 
 # Prepare scan directory
 cp -v "$scope_path/roots.txt" "$scan_path/roots.txt"
@@ -165,7 +164,7 @@ rm -f "$scan_path/dns.json"
 
 # Fingerprint hosts
 echo "Fingerprinting hosts using Nmap..."
-nmap -iL "$scan_path/ips.txt" -Pn -T4 -A "$ip" -oN "$scan_path/fingerprints/${ip}.txt"
+nmap -iL "$scan_path/ips.txt" -Pn -T4 -A "$ip" -oN "$scan_path/fingerprints.txt"
 
 ##################### FINISH AND CLEANUP #####################
 
